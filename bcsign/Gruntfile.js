@@ -6,5 +6,25 @@
 module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
+        clean: ['build', 'dist']
     });
+
+    // Minification
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    // code check
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    // development server
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    // testing
+    grunt.loadNpmTasks('grunt-mocha');
+    // version number syncing before releasing
+    grunt.loadNpmTasks('grunt-sync-pkg');
+    // file templates
+    grunt.loadNpmTasks('grunt-include-replace');
+    // copy bower components
+    grunt.loadNpmTasks('grunt-bower');
+    // Clean up
+    grunt.loadNpmTasks('grunt-contrib-clean');
+
+    grunt.registerTask('build', ['clean']);
 };
