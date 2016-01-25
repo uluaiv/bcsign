@@ -1,3 +1,7 @@
+/*
+ * Bcsign, an application for signing documents with the E-Residency card and posting the signature to the Ethereum blockchain.
+ */
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
