@@ -6,6 +6,13 @@
 module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
+        bower: {
+            build: {
+                dest: 'public',
+                js_dest: 'public/javascripts',
+                css_dest: 'public/stylesheets'
+            }
+        },
         clean: ['build', 'dist']
     });
 
@@ -15,6 +22,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     // development server
     grunt.loadNpmTasks('grunt-contrib-connect');
+
     // testing
     grunt.loadNpmTasks('grunt-mocha');
     // version number syncing before releasing
@@ -27,4 +35,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('build', ['clean']);
+    grunt.registerTask('dist', ['sync', 'build', 'bower', 'uglify:legacy']);
 };
