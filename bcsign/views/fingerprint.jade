@@ -1,10 +1,14 @@
 extends layout
 block content
     .container
-				form.form-signin
-					h2.form-signin-heading Please sign in
-					input.input-block-level(type="text", name="username", placeholder="Email address")
-					input.input-block-level(type="password", name="password", placeholder="Password")
-					label.checkbox.
-						<input type="checkbox" value="remember-me" /> Remember me
-					button.btn.btn-large.btn-primary(type="submit") Sign in
+      h2 Signature your own file
+      form(role='form')
+        .form-group
+          label(for='file') File:
+          input#email.form-control(type='file', placeholder='Enter a file')
+        .form-group
+          label(for='pwd') Hash:
+          input#pwd.form-control(type='password', disabled='')
+        button.btn.btn-default(type='submit') Save to ethereum!
+        
+ 
