@@ -18,7 +18,7 @@ transactions = function () {
 
         for (var i = 0; i < Document.length; i++)
         {
-            if (Document[i].hash == hash && to == b.args.to)
+            if (Document[i].hash == hash && Document[i].to == b.args.to)
             {
                 doc = Document[i];
             }
@@ -26,7 +26,7 @@ transactions = function () {
 
         //var doc = Document.findOne({hash: hash, to: b.args.to});
 
-        if (doc === undefined) {
+        if (typeof doc === "undefined") {
             Document.push({hash: hash, to: b.args.to, from: b.args.from, blockNumber: b.args.blockNumber.toString()})
         }
     })
