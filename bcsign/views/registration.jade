@@ -1,0 +1,12 @@
+extends layout
+block content
+    script(type='text/javascript').
+      function register() {
+      var publicKey = document.getElementById('publicKey').value;
+      alert('publicKey: ' + publicKey);
+      document.getElementById('link').innerHTML = "LINK";
+      }
+    | 		Public key:
+    input#publicKey(type='text', name='publicKey')
+    button(onclick='register()') Register
+    #link
