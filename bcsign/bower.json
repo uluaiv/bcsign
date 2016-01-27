@@ -11,7 +11,13 @@
   "dependencies": {
     "jquery": "2.2.0",
     "jqueryui": "1.11.4",
-    "hwcrypto": "0.0.10"
+    "hwcrypto": "0.0.10",
+    "minimongo":"",
+    "mongo-query":"",
+    "bootstrap":"3.0.0",
+    "less":"2.5.3",
+    "web3":"0.15.0",
+    "requirejs-bower":"2.1.22"
   },
   "devDependencies": {}
 }
