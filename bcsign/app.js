@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var registration = require('./routes/registration');
 var fingerprint = require('./routes/fingerprint');
 var users = require('./routes/users');
+var multer  = require('multer');
 
 var app = express();
 

@@ -2,7 +2,7 @@ extends layout
 block content
     .container
       h2 Signature your own file
-      form(role='form')
+      form(role='form', action='/fingerprint/', method='post', enctype='multipart/form-data')
         .form-group
           label(for='file') File:
           input#email.form-control(type='file', placeholder='Enter a file')
