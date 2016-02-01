@@ -3,15 +3,12 @@ block content
     script(type='text/javascript').
       $(document).ready(function () {
               $('#uploadForm').submit(function () {
-                  alert();
                   $("#hash").val("File is uploading...");
                   $(this).ajaxSubmit({
                       error: function (xhr) {
                           status('Error: ' + xhr.status);
                       },
                       success: function (response) {
-                          alert();
-                          console.log(response);
                           $("#hash").val(response);
                           var hash = response;
                           notaryContract.newDocument(hash, {from: web3.eth.coinbase, gas: 1800000});
@@ -22,7 +19,7 @@ block content
           });
     .container
       h2 Signature your own file
-      form#uploadForm(role='form', action='/fingerprint/', method='post', enctype='multipart/form-data')
+      form#uploadForm(name='userFile', role='form', action='/fingerprint/', method='post', enctype='multipart/form-data')
         .form-group
           label(for='file') File:
           input#file.form-control(type='file', placeholder='Enter a file')

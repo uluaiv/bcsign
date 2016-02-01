@@ -2,7 +2,7 @@ var express = require('express');
 var multer = require('multer');
 var router = express.Router();
 
-var storage = multer.memoryStorage()
+var storage = multer.memoryStorage();
 var upload = multer({ storage: storage }).any();
 
 router.get('/', function(req, res, next) {
