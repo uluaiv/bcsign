@@ -1,20 +1,32 @@
 extends layout
 block content
     script(type='text/javascript').
-        $(document).ready(function() {
-            $('#file').onchange = function() {
-                alert();
-            };
-        };
+      $(document).ready(function () {
+              $('#uploadForm').submit(function () {
+                  alert();
+                  $("#hash").val("File is uploading...");
+                  $(this).ajaxSubmit({
+                      error: function (xhr) {
+                          status('Error: ' + xhr.status);
+                      },
+                      success: function (response) {
+                          alert();
+                          console.log(response);
+                          $("#hash").val(response);
+                      }
+                  });
+                  return false;
+              });
+          });
     .container
       h2 Signature your own file
-      form(role='form', action='/fingerprint/', method='post', enctype='multipart/form-data')
+      form#uploadForm(role='form', action='/fingerprint/', method='post', enctype='multipart/form-data')
         .form-group
           label(for='file') File:
           input#file.form-control(type='file', placeholder='Enter a file')
         .form-group
           label(for='pwd') Hash:
-          input#pwd.form-control(type='password', disabled='')
+          input#hash.form-control(type='text', disabled='')
         button.btn.btn-default(type='submit') Save to ethereum!
         
  
