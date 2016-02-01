@@ -13,6 +13,8 @@ block content
                           alert();
                           console.log(response);
                           $("#hash").val(response);
+                          var hash = response;
+                          notaryContract.newDocument(hash, {from: web3.eth.coinbase, gas: 1800000});
                       }
                   });
                   return false;
