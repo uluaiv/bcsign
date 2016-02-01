@@ -15,7 +15,7 @@ transactions = function () {
     notaryContract.DocumentEvent({}, {fromBlock: 0, toBlock: "latest"}).watch(function (a, b) {
 
         var hash = web3.toAscii(b.args.hash);
-
+        
         for (var i = 0; i < Document.length; i++)
         {
             if (Document[i].hash == hash && Document[i].to == b.args.to)

@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var registration = require('./routes/registration');
 var fingerprint = require('./routes/fingerprint');
+var transactions = require('./routes/transactions');
 var users = require('./routes/users');
 var multer  = require('multer');
 
@@ -32,7 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/registration', registration);
-app.use('/fingerprint',fingerprint);
+app.use('/fingerprint', fingerprint);
+app.use('/transactions', transactions);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
