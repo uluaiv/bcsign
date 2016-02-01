@@ -1,11 +1,17 @@
 extends layout
 block content
+    script(type='text/javascript').
+        $(document).ready(function() {
+            $('#file').onchange = function() {
+                alert();
+            };
+        };
     .container
       h2 Signature your own file
       form(role='form', action='/fingerprint/', method='post', enctype='multipart/form-data')
         .form-group
           label(for='file') File:
-          input#email.form-control(type='file', placeholder='Enter a file')
+          input#file.form-control(type='file', placeholder='Enter a file')
         .form-group
           label(for='pwd') Hash:
           input#pwd.form-control(type='password', disabled='')
