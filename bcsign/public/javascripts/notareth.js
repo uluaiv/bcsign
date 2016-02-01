@@ -6,10 +6,10 @@
 
 Document = new Array();
 
-setInterval(function () {
+/*setInterval(function () {
     console.log('Geth' + (web3.isConnected() ? " is " : " is not ") + 'connected.');
     console.log('Balance: ' + web3.fromWei(web3.eth.getBalance(web3.eth.coinbase).toString()));
-}, 5000);
+}, 5000); */
 
 transactions = function () {
     notaryContract.DocumentEvent({}, {fromBlock: 0, toBlock: "latest"}).watch(function (a, b) {
