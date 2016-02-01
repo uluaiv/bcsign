@@ -6,7 +6,10 @@ block content
       alert('publicKey: ' + publicKey);
       document.getElementById('link').innerHTML = "LINK";
       }
-    | 		Public key:
-    input#publicKey(type='text', name='publicKey')
-    button(onclick='register()') Register
+    .container
+      h2 Signature your own file
+        
+        .form-group
+            input#publicKey.form-control(type='text', name='publicKey')
+        button.btn.btn-default(onclick='register()') Register
     #link
