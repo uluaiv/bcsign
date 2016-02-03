@@ -6,12 +6,12 @@ block content
 
 					var documents = new Array();
 
-					notaryContract.DocumentEvent({}, {fromBlock: 0, toBlock: "latest"}).watch(function (a, b) {
-
-						var hash = web3.toAscii(b.args.hash);
+					notaryContract.DocumentEvent({}, {fromBlock: 0, toBlock: "latest"}).watch(function (a, transaction) {
+						
+						var hash = web3.toAscii(transaction.args.hash);
 
 						for (var i = 0; i < documents.length; i++) {
-							if (documents[i].hash === hash && documents[i].to === b.args.to) {
+							if (documents[i].hash === hash && documents[i].to === transaction.args.to) {
 								doc = documents[i];
 							}
 						}
@@ -19,8 +19,9 @@ block content
 						if (typeof doc !== "undefined") {
 							return;
 						}
+                                                
 
-						documents.push({hash: hash, to: b.args.to, from: b.args.from, blockNumber: b.args.blockNumber.toString()});
+						documents.push({hash: hash, to: transaction.args.to, from: transaction.args.from, blockNumber: transaction.args.blockNumber.toString()});
 
 						var table = document.getElementById("transactionTable");
 
@@ -31,10 +32,10 @@ block content
 						var cell3 = row.insertCell(2);
 						var cell4 = row.insertCell(3);
 
-						cell1.innerHTML = hash;
-						cell2.innerHTML = "<a href='https://etherchain.org/account/" + b.args.from +"'>" + b.args.from + "</a>";
-						cell3.innerHTML = "<a href='https://etherchain.org/account/" + b.args.to.toString() +"'>" + b.args.to.toString() + "</a>";
-						cell4.innerHTML = "<a href='https://etherchain.org/block/" + b.args.blockNumber.toString() +"'>" + b.args.blockNumber.toString() + "</a>";
+						cell1.innerHTML = "<a href='https://etherchain.org/tx/" + transaction.transactionHash +"'>" + transaction.transactionHash.substring(0, 9) + "...</a>";
+						cell2.innerHTML = "<a href='https://etherchain.org/account/" + transaction.args.from +"'>" + transaction.args.from.substring(0, 9) + "...</a>";
+						cell3.innerHTML = "<a href='https://etherchain.org/account/" + transaction.args.to.toString() +"'>" + transaction.args.to.substring(0, 9) + "...</a>";
+						cell4.innerHTML = "<a href='https://etherchain.org/block/" + transaction.args.blockNumber.toString() +"'>" + transaction.args.blockNumber.toString() + "</a>";
 					});
 				});
 			});
@@ -43,7 +44,7 @@ block content
 			table.table.table-striped
 				thead
 					tr
-						th(style='min-width:200px') Hash
+						th(style='min-width:200px') ID
 						th(style='min-width:200px') From
 						th(style='min-width:200px') To
 						th(style='min-width:50px') Block number
