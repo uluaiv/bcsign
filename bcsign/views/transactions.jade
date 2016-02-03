@@ -32,9 +32,9 @@ block content
 						var cell4 = row.insertCell(3);
 
 						cell1.innerHTML = hash;
-						cell2.innerHTML = b.args.from;
-						cell3.innerHTML = b.args.to;
-						cell4.innerHTML = b.args.blockNumber.toString();
+						cell2.innerHTML = "<a href='https://etherchain.org/account/" + b.args.from +"'>" + b.args.from + "</a>";
+						cell3.innerHTML = "<a href='https://etherchain.org/account/" + b.args.to.toString() +"'>" + b.args.to.toString() + "</a>";
+						cell4.innerHTML = "<a href='https://etherchain.org/block/" + b.args.blockNumber.toString() +"'>" + b.args.blockNumber.toString() + "</a>";
 					});
 				});
 			});
@@ -43,8 +43,8 @@ block content
 			table.table.table-striped
 				thead
 					tr
-						th Hash
-						th From
-						th To
-						th Block number
-				tbody#transactionTable
+						th(style='min-width:200px') Hash
+						th(style='min-width:200px') From
+						th(style='min-width:200px') To
+						th(style='min-width:50px') Block number
+				tbody#transactionTable(style='font-size: 10pt;')
