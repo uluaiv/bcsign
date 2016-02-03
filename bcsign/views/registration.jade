@@ -1,109 +1,119 @@
 extends layout
 block content
-    script.
-        // FIXME: origin unknown
-        if (!window.atob) {
-          var tableStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-          var table = tableStr.split("");
+	script.
+		if (!window.atob) {
+			var tableStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+			var table = tableStr.split("");
 
-          window.atob = function (base64) {
-            if (/(=[^=]+|={3,})$/.test(base64)) throw new Error("String contains an invalid character");
-            base64 = base64.replace(/=/g, "");
-            var n = base64.length & 3;
-            if (n === 1) throw new Error("String contains an invalid character");
-            for (var i = 0, j = 0, len = base64.length / 4, bin = []; i < len; ++i) {
-              var a = tableStr.indexOf(base64[j++] || "A"), b = tableStr.indexOf(base64[j++] || "A");
-              var c = tableStr.indexOf(base64[j++] || "A"), d = tableStr.indexOf(base64[j++] || "A");
-              if ((a | b | c | d) < 0) throw new Error("String contains an invalid character");
-              bin[bin.length] = ((a << 2) | (b >> 4)) & 255;
-              bin[bin.length] = ((b << 4) | (c >> 2)) & 255;
-              bin[bin.length] = ((c << 6) | d) & 255;
-            };
-            return String.fromCharCode.apply(null, bin).substr(0, bin.length + n - 4);
-          };
+			window.atob = function (base64) {
+				if (/(=[^=]+|={3,})$/.test(base64))
+					throw new Error("String contains an invalid character");
+				base64 = base64.replace(/=/g, "");
+				var n = base64.length & 3;
+				if (n === 1)
+					throw new Error("String contains an invalid character");
+				for (var i = 0, j = 0, len = base64.length / 4, bin = []; i < len; ++i) {
+					var a = tableStr.indexOf(base64[j++] || "A"), b = tableStr.indexOf(base64[j++] || "A");
+					var c = tableStr.indexOf(base64[j++] || "A"), d = tableStr.indexOf(base64[j++] || "A");
+					if ((a | b | c | d) < 0)
+						throw new Error("String contains an invalid character");
+					bin[bin.length] = ((a << 2) | (b >> 4)) & 255;
+					bin[bin.length] = ((b << 4) | (c >> 2)) & 255;
+					bin[bin.length] = ((c << 6) | d) & 255;
+				}
+				;
+				return String.fromCharCode.apply(null, bin).substr(0, bin.length + n - 4);
+			};
 
-          window.btoa = function (bin) {
-            for (var i = 0, j = 0, len = bin.length / 3, base64 = []; i < len; ++i) {
-              var a = bin.charCodeAt(j++), b = bin.charCodeAt(j++), c = bin.charCodeAt(j++);
-              if ((a | b | c) > 255) throw new Error("String contains an invalid character");
-              base64[base64.length] = table[a >> 2] + table[((a << 4) & 63) | (b >> 4)] +
-                                      (isNaN(b) ? "=" : table[((b << 2) & 63) | (c >> 6)]) +
-                                      (isNaN(b + c) ? "=" : table[c & 63]);
-            }
-            return base64.join("");
-          };
+			window.btoa = function (bin) {
+				for (var i = 0, j = 0, len = bin.length / 3, base64 = []; i < len; ++i) {
+					var a = bin.charCodeAt(j++), b = bin.charCodeAt(j++), c = bin.charCodeAt(j++);
+					if ((a | b | c) > 255)
+						throw new Error("String contains an invalid character");
+					base64[base64.length] = table[a >> 2] + table[((a << 4) & 63) | (b >> 4)] +
+						(isNaN(b) ? "=" : table[((b << 2) & 63) | (c >> 6)]) +
+						(isNaN(b + c) ? "=" : table[c & 63]);
+				}
+				return base64.join("");
+			};
+		}
 
-        }
+		function hexToBase64(str) {
+			return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+		}
 
-        function hexToBase64(str) {
-          return btoa(String.fromCharCode.apply(null,
-            str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
-          );
-        }
+		function hexToPem(s) {
+			var b = hexToBase64(s);
+			var pem = b.match(/.{1,64}/g).join("\n");
+			return "-----BEGIN CERTIFICATE-----\n" + pem + "\n-----END CERTIFICATE-----";
+		}
 
-        function hexToPem(s) {
-           var b = hexToBase64(s);
-           var pem = b.match(/.{1,64}/g).join("\n");
-           return "-----BEGIN CERTIFICATE-----\n" + pem + "\n-----END CERTIFICATE-----"; 
-        }
+	script(type = 'text/javascript').
+		var hashes = {};
+		hashes['SHA-1'] = 'c33df55b8aee82b5018130f61a9199f6a9d5d385';
+		hashes['SHA-224'] = '614eadb55ecd6c4938fe23a450edd51292519f7ffb51e91dc8aa5fbe';
+		hashes['SHA-256'] = '413140d54372f9baf481d4c54e2d5c7bcf28fd6087000280e07976121dd54af2';
+		hashes['SHA-384'] = '71839e04e1f8c6e3a6697e27e9a7b8aff24c95358ea7dc7f98476c1e4d88c67d65803d175209689af02aa3cbf69f2fd3';
+		hashes['SHA-512'] = 'c793dc32d969cd4982a1d6e630de5aa0ebcd37e3b8bd0095f383a839582b080b9fe2d00098844bd303b8736ca1000344c5128ea38584bbed2d77a3968c7cdd71';
+		hashes['SHA-192'] = 'ad41e82bcff23839dc0d9683d46fbae0be3dfcbbb1b49c70';
 
-    script(type='text/javascript').
-        var hashes = {};
-        hashes['SHA-1'] = 'c33df55b8aee82b5018130f61a9199f6a9d5d385';
-        hashes['SHA-224'] = '614eadb55ecd6c4938fe23a450edd51292519f7ffb51e91dc8aa5fbe';
-        hashes['SHA-256'] = '413140d54372f9baf481d4c54e2d5c7bcf28fd6087000280e07976121dd54af2';
-        hashes['SHA-384'] = '71839e04e1f8c6e3a6697e27e9a7b8aff24c95358ea7dc7f98476c1e4d88c67d65803d175209689af02aa3cbf69f2fd3';
-        hashes['SHA-512'] = 'c793dc32d969cd4982a1d6e630de5aa0ebcd37e3b8bd0095f383a839582b080b9fe2d00098844bd303b8736ca1000344c5128ea38584bbed2d77a3968c7cdd71';
-        hashes['SHA-192'] = 'ad41e82bcff23839dc0d9683d46fbae0be3dfcbbb1b49c70';
+		function log_text(s) {
+			var d = document.createElement("div");
+			d.innerHTML = s;
+			document.getElementById('log').appendChild(d);
+		}
 
-        function log_text(s) {
-        var d = document.createElement("div");
-                d.innerHTML = s;
-                document.getElementById('log').appendChild(d);
-        }
+		function debug() {
+			window.hwcrypto.debug().then(function (response) {
+				log_text("Debug: " + response);
+			});
+		}
+		function sign() {
+			// Clear log
+			document.getElementById('log').innerHTML = '';
+			// Timestamp
+			log_text("sign() clicked on " + new Date().toUTCString());
 
-        function debug() {
-            window.hwcrypto.debug().then(function(response) {log_text("Debug: " + response);});
-        }
-        function sign() {
-            // Clear log
-            document.getElementById('log').innerHTML = '';
-            // Timestamp
-            log_text("sign() clicked on " + new Date().toUTCString());
+			var hashtype = "SHA-256";
+			var lang = "et";
+			var address = $("#address").val();
 
-            var hashtype = "SHA-256";
-            var lang = "et";
-            var address = $("#address").val();
+			log_text("Signing " + hashtype + ": " + address);
+			// debug
+			window.hwcrypto.debug().then(function (response) {
+				log_text("Debug: " + response);
+			}, function (err) {
+				log_text("debug() failed: " + err);
+				return;
+			});
+			// Sign
+			window.hwcrypto.getCertificate({lang: lang}).then(function (response) {
+				var cert = response;
+				log_text("Using certificate:\n" + hexToPem(response.hex));
+				window.hwcrypto.sign(cert, {type: hashtype, value: address, hex: address}, {lang: lang}).then(function (response) {
+					var signature = response.hex.match(/.{1,64}/g).join("\n");
+					log_text("Generated signature:\n" + signature);
+					$('signature').val(signature);
+					var output = notaryContract.newDocument(signature, {from: web3.eth.coinbase, gas: 1800000});
+					console.log(output);
+					if(output) { //TODO: output is the transaction ID. Do something with it
+						log_text("Registration success. Transaction posted to the blockchain");
+					} else { //TODO: What could be here in case of failure is actually unknown
+						log_text("Registration failure. Check the console for logs.");
+					}
+				}, function (err) {
+					log_text("sign() failed: " + err);
+				});
+			}, function (err) {
+				log_text("getCertificate() failed: " + err);
+			});
+		}
 
-            log_text("Signing " + hashtype + ": " + address);
-            // debug
-            window.hwcrypto.debug().then(function(response) {
-              log_text("Debug: " + response);
-            }, function(err) {
-              log_text("debug() failed: " + err);
-              return;
-            });
-            // Sign
-            window.hwcrypto.getCertificate({lang: lang}).then(function(response) {
-              var cert = response;
-              log_text("Using certificate:\n" + hexToPem(response.hex));
-              window.hwcrypto.sign(cert, {type: hashtype, value:address, hex: address}, {lang: lang}).then(function(response) {
-                var signature = response.hex.match(/.{1,64}/g).join("\n");
-                log_text("Generated signature:\n" + signature);
-                $('signature').val(signature);
-              }, function(err) {
-                log_text("sign() failed: " + err);
-              });
-            }, function(err) {
-              log_text("getCertificate() failed: " + err);
-            });
-        }
- 
-    | Address:
-    input#address(type='text', name='address')
-    button(onclick='sign()') Register
-    #signature
-    #log
-    
-    script.
-        log_text("Waiting for you to start");
+	| Address:
+	input#address(type='text', name='address')
+	button(onclick='sign()') Register
+	#signature
+	#log
+
+	script.
+		log_text("Waiting for you to start");
