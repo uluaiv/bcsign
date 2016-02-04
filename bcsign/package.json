@@ -24,7 +24,7 @@
     "grunt-sync-pkg": "^0.1.2",
     "jade": "~1.11.0",
     "js-sha256": "^0.3.0",
-    "less-middleware": "1.0.x",
+    "less-middleware": "",
     "mocha-phantomjs": "^3.5.3",
     "morgan": "~1.6.1",
     "multer": "1.1.0",
