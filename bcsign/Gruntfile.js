@@ -35,5 +35,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('build', ['clean']);
-    grunt.registerTask('dist', ['sync', 'build', 'bower', 'uglify:legacy']);
+    grunt.registerTask('dist', ['sync', 'build', 'bower']);
 };
