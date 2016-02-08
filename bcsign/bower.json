@@ -12,6 +12,8 @@
     "jquery": "2.2.0",
     "jqueryui": "1.11.4",
     "hwcrypto": "0.0.10",
+    "minimongo": "",
+    "mongo-query": "",
     "web3": "0.15.0",
     "requirejs-bower": "2.1.22",
     "bootstrap": "3.3.2",
