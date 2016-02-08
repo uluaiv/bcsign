@@ -19,7 +19,6 @@ block content
 						if (typeof doc !== "undefined") {
 							return;
 						}
-                                                
 
 						documents.push({hash: hash, to: transaction.args.to, from: transaction.args.from, blockNumber: transaction.args.blockNumber.toString()});
 
@@ -34,7 +33,7 @@ block content
 
 						cell1.innerHTML = "<a href='https://etherchain.org/tx/" + transaction.transactionHash +"'>" + transaction.transactionHash.substring(0, 9) + "...</a>";
 						cell2.innerHTML = "<a href='https://etherchain.org/account/" + transaction.args.from +"'>" + transaction.args.from.substring(0, 9) + "...</a>";
-						cell3.innerHTML = "<a href='https://etherchain.org/account/" + transaction.args.to.toString() +"'>" + transaction.args.to.substring(0, 9) + "...</a>";
+						cell3.innerHTML = "<a href='https://etherchain.org/account/" + transaction.address +"'>" + transaction.address.substring(0, 9) + "...</a>";
 						cell4.innerHTML = "<a href='https://etherchain.org/block/" + transaction.args.blockNumber.toString() +"'>" + transaction.args.blockNumber.toString() + "</a>";
 					});
 				});
