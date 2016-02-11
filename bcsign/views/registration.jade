@@ -90,11 +90,13 @@ block content
 			window.hwcrypto.getCertificate({lang: lang}).then(function (response) {
 				var cert = response;
 				log_text("Using certificate:\n" + hexToPem(response.hex));
-				window.hwcrypto.sign(cert, {type: hashtype, value: address, hex: address}, {lang: lang}).then(function (response) {
+				console.log(address);
+				window.hwcrypto.sign(cert, {type: "SHA-256", hex: '7d0ff6aza2418401c6509e3745c1ea0c97d0e62f0'}, {lang: lang}).then(function (response) {
 					var signature = response.hex.match(/.{1,64}/g).join("\n");
+					console.log(signature);
 					log_text("Generated signature:\n" + signature);
 					$('signature').val(signature);
-					var output = notaryContract.newDocument(signature, {from: web3.eth.coinbase, gas: 1800000});
+					var output; //= notaryContract.newDocument(signature, {from: web3.eth.coinbase, gas: 1800000});
 					console.log(output);
 					if(output) { //TODO: output is the transaction ID. Do something with it
 						log_text("Registration success. Transaction posted to the blockchain");

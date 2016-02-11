@@ -7,7 +7,7 @@ var storage = multer.memoryStorage();
 var upload = multer({ storage: storage }).single('userFile');
 
 router.get('/', function(req, res, next) {
-  res.render('fingerprint', { title: 'fingerprint' });
+  res.render('test', { title: 'fingerprint' });
 });
 
 router.post('/',function(req,res){
