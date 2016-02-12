@@ -15,6 +15,7 @@ var fingerprint = require('./routes/fingerprint');
 var transactions = require('./routes/transactions');
 var users = require('./routes/users');
 var db = require('./routes/db');
+var login = require('./routes/login');
 var multer  = require('multer');
 
 var app = express();
@@ -37,7 +38,8 @@ app.use('/registration', registration);
 app.use('/fingerprint', fingerprint);
 app.use('/transactions', transactions);
 app.use('/users', users);
-app.use('/db',db);
+app.use('/db', db);
+app.use('/login', login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
